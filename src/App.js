@@ -3,29 +3,35 @@ import Home from "./components/Home";
 import Products from "./components/Products";
 import "bootstrap/dist/css/bootstrap.min.css"
 import NewProduct from "./components/NewProduct";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [currentRoute, setCurrentRoute] = useState();
+  useEffect(() => {
+    const path = window.location.pathname.toLowerCase();
+    setCurrentRoute(path.slice(1, path.length));
+  },[])
   return (
    <BrowserRouter>
     <nav>
       <ul className="nav nav-pills p-1 m-3">
       <li>
-            <Link className="btn btn-outline-info ms-1" to={"/"}>
+            <Link onClick={() => setCurrentRoute("home")} className={currentRoute === "home" ? "btn btn-info ms-1" : "btn btn-outline-info ms-1"} to={"/home"}>
               Home
             </Link>
-            <Link className="btn btn-outline-info ms-1" to={"/products"}>
+            <Link onClick={() => setCurrentRoute("products")} className={currentRoute === "products" ? "btn btn-info ms-1" : "btn btn-outline-info ms-1"} to={"/products"}>
               Products
             </Link>
-            <Link className="btn btn-outline-info ms-1" to={"/newProduct"}>
+            <Link onClick={() => setCurrentRoute("newProduct")} className={currentRoute === "newProduct" ? "btn btn-info ms-1" : "btn btn-outline-info ms-1"} to={"/newProduct"}>
               New Product
             </Link>
           </li>
       </ul>
     </nav>
     <Routes>
-      <Route path="/" element={<Home/>} />
-      <Route path="/Products" element={<Products/>} />
-      <Route path="/NewProduct" element={<NewProduct/>} />
+      <Route path="/home" element={<Home/>} />
+      <Route path="/products" element={<Products/>} />
+      <Route path="/newProduct" element={<NewProduct/>} />
     </Routes>
    </BrowserRouter>
   );
