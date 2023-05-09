@@ -1,21 +1,13 @@
 import { faCheckCircle, faCircle, faEdit, faSearch, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useEffect, useState } from 'react'
-import { checkProduct, deleteProduct, getProducts } from '../app/app'
+import React, { useContext, useEffect, useState } from 'react'
+import { AppContext, checkProduct, deleteProduct, getProducts } from '../app/app'
 import { useNavigate } from 'react-router-dom';
+import SearchForm from './SearchForm';
 
 function Products() {
-  
-  const [query, setQuery] = useState("");
   const navigate = useNavigate();
-  const [state, setState] = useState({
-    products: [],
-    currentPage: 1,
-    pageSize: 4,
-    keyWord: "",
-    totalPage: 0
-  });
-
+  const [state, setState] = useContext(AppContext)
    useEffect(() => {
     handleGetProduct(state.keyWord, state.currentPage, state.pageSize);
   },[])
@@ -73,31 +65,13 @@ function Products() {
       handleGetProduct(state.keyWord, page, state.pageSize);
   }
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    handleGetProduct(query, 1, state.pageSize);
-  }
-
   return (
     <div className="p-3">
           <div className='row'>
             <div className="col-md-6">
                 <div className='card m-1'>
                 <div className='card-body'>
-                    <form onSubmit={handleSearch}>
-                      <div className='row g-2'>
-                        <div className='col-auto'>
-                          <input value={query}
-                          onChange={(e) => setQuery(e.target.value)} 
-                          className='form-control'/>
-                        </div>
-                        <div className='col-auto'>
-                          <button className='btn btn-success'>
-                            <FontAwesomeIcon icon={faSearch} ></FontAwesomeIcon>
-                            </button>
-                        </div>
-                      </div>
-                    </form>
+                  <SearchForm handleGetProduct = {handleGetProduct}/>
                   </div>
                 </div>
                 <div className="card m-1">
@@ -143,7 +117,7 @@ function Products() {
                     <nav className='nav nav-pills'>
                       {
                         new Array(state.totalPages).fill(0).map((v, index) => (
-                          <li>
+                          <li key={index + 1}>
                             <button onClick={() => handleGoToPage(index + 1)} 
                                     className={ (index + 1) === state.currentPage ? "btn btn-info ms-1" : "btn btn-outline-info ms-1"}>
                                 {index + 1}
