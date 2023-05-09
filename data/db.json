@@ -1,7 +1,7 @@
 {
   "products": [
     {
-      "id": 2,
+      "id": 1,
       "name": "Printer 54",
       "price": 1200,
       "checked": true
@@ -9,38 +9,62 @@
     {
       "name": "Key r5",
       "price": "78",
-      "checked": "false",
+      "checked": true,
+      "id": 2
+    },
+    {
+      "name": "ADMIN",
+      "price": "90",
+      "checked": true,
+      "id": 3
+    },
+    {
+      "name": "USER",
+      "price": "90",
+      "checked": false,
+      "id": 5
+    },
+    {
+      "name": "ADMIN",
+      "price": "90",
+      "checked": true,
       "id": 6
     },
     {
       "name": "ADMIN",
       "price": "90",
       "checked": false,
+      "id": 7
+    },
+    {
+      "name": "Gamer 5e",
+      "price": "4682",
+      "checked": true,
       "id": 8
     },
     {
-      "name": "RGB t90",
-      "price": "78",
-      "checked": false,
+      "name": "Gamer 5e",
+      "price": "4682",
+      "checked": true,
+      "id": 9
+    },
+    {
+      "name": "Gamer 5e",
+      "price": "4682",
+      "checked": true,
       "id": 10
     },
     {
-      "name": "USER",
-      "price": "90",
-      "checked": false,
+      "name": "Gamer 5e",
+      "price": "4682",
+      "checked": true,
       "id": 11
     },
     {
-      "name": "ADMIN",
-      "price": "90",
+      "name": "Gamer 5e",
+      "price": "4682",
       "checked": true,
       "id": 12
-    },
-    {
-      "name": "ADMIN",
-      "price": "90",
-      "checked": false,
-      "id": 13
     }
   ]
 }

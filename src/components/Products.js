@@ -1,28 +1,48 @@
 import { faCheckCircle, faCircle, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { checkProduct, deleteProduct, getProducts } from '../app/app'
 
 function Products() {
-  const [products, setProducts] = useState([])
+  const [state, setState] = useState({
+    products: [],
+    currentPage: 1,
+    pageSize: 4,
+    keyWord: "",
+    totalPage: 0
+  })
 
   useEffect(() => {
-    handleGetProduct();
+    handleGetProduct(state.keyWord, state.currentPage, state.pageSize);
   },[])
 
-  const handleGetProduct = () => {
-    getProducts().then(resp => {
-      const products = resp.data;
-      setProducts(products);
+  const handleGetProduct = (keyWord, page, size) => {
+    getProducts(keyWord, page, size).then(resp => {
+      const totalElements = resp.headers['x-total-count'];
+      let totalPages = Math.floor(totalElements / size);
+      if(totalElements % size !== 0){
+        ++ totalPages;
+      }
+      setState({
+        ...state, 
+        products: resp.data,
+        currentPage: page,
+        pageSize: size,
+        keyWord: keyWord,
+        totalPages: totalPages
+      });
     }).catch(e => {
       console.log(e);
     })
   }
+
   const handleDeleteProduct = (product) => {
     deleteProduct(product).then((resp) => {
-      const newProducts = products.filter((p) => p.id !== product.id);
-      setProducts(newProducts);
+      const newProducts = state.products.filter((p) => p.id !== product.id);
+      setState({
+        ...state,
+        products: newProducts
+      });
     }).catch(e => {
       console.log(e);
     })
@@ -30,16 +50,23 @@ function Products() {
 
   const handleCheckProduct = (product) => {
     checkProduct(product).then((resp) => {
-      const newProducts = products.map(p => {
+      const newProducts = state.products.map(p => {
         if(p.id === product.id){
           p.checked = !product.checked;
         }
         return p;
       })
-      setProducts(newProducts); 
+      setState({
+        ...state,
+        products: newProducts
+      }); 
     }).catch(e => {
       console.log(e);
     })
+  }
+
+  const handleGoToPage = (page) => {
+      handleGetProduct(state.keyWord, page, state.pageSize);
   }
 
   return (
@@ -59,7 +86,7 @@ function Products() {
                       </thead>
                       <tbody>
                           {
-                            products.map((product, index) => {
+                            state.products.map((product, index) => {
                               return(
                                 <tr key={product.id}>
                                   <td>{product.id}</td>
@@ -81,6 +108,18 @@ function Products() {
                           }
                       </tbody>
                     </table>
+                    <nav className='nav nav-pills'>
+                      {
+                        new Array(state.totalPages).fill(0).map((v, index) => (
+                          <li>
+                            <button onClick={() => handleGoToPage(index + 1)} 
+                                    className={ (index + 1) === state.currentPage ? "btn btn-info ms-1" : "btn btn-outline-info ms-1"}>
+                                {index + 1}
+                            </button>
+                          </li>   
+                        ))
+                      }
+                    </nav>
                   </div>
                 </div>
             </div>
