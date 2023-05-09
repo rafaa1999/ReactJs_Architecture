@@ -1,12 +1,26 @@
-import React, { useState } from 'react'
-import { saveProduct } from '../app/app';
+import React, { useEffect, useState } from 'react'
+import { getProduct, saveProduct } from '../app/app';
+import { useParams } from 'react-router-dom';
 
-function NewProduct() {
-
+function EditProduct() {
+  const {id} = useParams();
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [checked, setChecked] = useState(false);
-  
+
+  useEffect(() => {
+    handleGetProductById(id);
+  },[])
+
+  const handleGetProductById = (id) => {
+    getProduct(id).then((resp) => {
+      const {name, price, checked} = resp.data;
+      setName(name);
+      setPrice(price);
+      setChecked(checked);
+    })
+  }
+
   const handleSaveProduct = (event) => {
     event.preventDefault();
     let product = {
@@ -58,4 +72,4 @@ function NewProduct() {
   )
 }
 
-export default NewProduct
+export default EditProduct

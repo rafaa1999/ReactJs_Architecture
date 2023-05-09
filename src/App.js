@@ -4,6 +4,7 @@ import Products from "./components/Products";
 import "bootstrap/dist/css/bootstrap.min.css"
 import NewProduct from "./components/NewProduct";
 import { useEffect, useState } from "react";
+import EditProduct from "./components/EditProduct";
 
 function App() {
   const [currentRoute, setCurrentRoute] = useState();
@@ -32,6 +33,7 @@ function App() {
       <Route path="/home" element={<Home/>} />
       <Route path="/products" element={<Products/>} />
       <Route path="/newProduct" element={<NewProduct/>} />
+      <Route path="/editProduct/:id" element={<EditProduct/>} />
     </Routes>
    </BrowserRouter>
   );
