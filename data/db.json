@@ -7,9 +7,9 @@
       "checked": true
     },
     {
-      "name": "Key r5",
-      "price": "78",
-      "checked": false,
+      "name": "Key Rs34",
+      "price": "9872",
+      "checked": "on",
       "id": 2
     },
     {
@@ -64,7 +64,7 @@
       "name": "Gamer 5e",
       "price": "4682",
       "checked": true,
-    "id": 12
+      "id": 12
     },
     {
       "name": "PC",

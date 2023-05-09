@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getProduct, saveProduct } from '../app/app';
+import { getProduct, saveProduct, updateProduct } from '../app/app';
 import { useParams } from 'react-router-dom';
 
 function EditProduct() {
@@ -21,14 +21,15 @@ function EditProduct() {
     })
   }
 
-  const handleSaveProduct = (event) => {
+  const handleUpdateProduct = (event) => {
     event.preventDefault();
     let product = {
       name,
       price,
-      checked
+      checked,
+      id
     }
-    saveProduct(product).then(resp => {
+    updateProduct(product).then(resp => {
       alert(JSON.stringify(resp.data));
     });
   }
@@ -38,7 +39,7 @@ function EditProduct() {
       <div className='col-md-6'>
         <div className='card'>
           <div className='card-body'>
-            <form onSubmit={handleSaveProduct}>
+            <form onSubmit={handleUpdateProduct}>
               <div className='mb-3'>
                 <label className='form-label'>Name :</label>
                 <input
